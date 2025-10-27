@@ -6,6 +6,7 @@ import java.util.ArrayList;
  *
  * @author Administrador
  */
+
 public interface interfaz<T> {
 
     boolean insertar(T t);

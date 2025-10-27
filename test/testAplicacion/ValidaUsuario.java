@@ -7,6 +7,7 @@ import controlador.UsuarioController;
  *
  * @author Administrador
  */
+
 public class ValidaUsuario {
 
     public static void main(String[] args) {
