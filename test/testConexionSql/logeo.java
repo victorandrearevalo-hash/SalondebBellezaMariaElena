@@ -10,6 +10,7 @@ import conexionSql.Conexion;
  *
  * @author Administrador
  */
+
 public class logeo {
 
     public static void main(String[] args) {
