@@ -17,4 +17,5 @@ public interface interfaz<T> {
     T buscar(int id);
 
     ArrayList<T> listar();
+    
 }

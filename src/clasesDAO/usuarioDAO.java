@@ -5,8 +5,7 @@ import conexionSql.Conexion;
 import interfaces.interfaz;
 import java.sql.*;
 import java.util.ArrayList;
-import java.security.MessageDigest;
-import java.nio.charset.StandardCharsets;
+
 
 /**
  *
@@ -14,7 +13,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class usuarioDAO implements interfaz<Usuario> {
 
-    // ✅ MÉTODO DE LOGIN USANDO PROCEDIMIENTO ALMACENADO
+    //  MÉTODO DE LOGIN USANDO PROCEDIMIENTO ALMACENADO
     public Usuario validarLogin(String nombreUsuario, String password) {
         Usuario user = null;
         Connection con = Conexion.getConexion();
