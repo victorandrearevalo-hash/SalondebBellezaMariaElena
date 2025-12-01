@@ -9,18 +9,6 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Administrador
- */
-public class servicioDAO implements ICRUD<Servicio> {
-
-    private String ultimoMensaje;
-    private int ultimoTipo;  // 0=ERROR, 1=ADVERTENCIA, 2=EXITO
-
-    public String getUltimoMensaje() {
-        return ultimoMensaje;
-    }
-
-    public int getUltimoTipo() {
         return ultimoTipo;
     }
 
