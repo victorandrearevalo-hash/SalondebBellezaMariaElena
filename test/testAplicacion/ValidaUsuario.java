@@ -1,24 +1,43 @@
 package testAplicacion;
 
 import clases.Usuario;
-import controlador.UsuarioController; 
+import controlador.usuarioController; // Asegúrate de que el paquete coincida con el tuyo
 
 /**
  *
  * @author Administrador
  */
-
 public class ValidaUsuario {
 
     public static void main(String[] args) {
-        UsuarioController controller = new UsuarioController();
-        Usuario user = controller.login("Admin", "123456");
+        usuarioController controller = new usuarioController();
 
-        if (user != null) {
-            System.out.println("✅ Login correcto: " + user.getNombreUsuario());
-        } else {
-            System.out.println("❌ Usuario o contraseña incorrectos");
+        boolean loginExitoso = controller.validarlogin("Administrador", "Admin$1234");
+
+        String msj = controller.getMensaje();
+        int tipo = controller.getTipoMensaje();
+
+        switch (tipo) {
+            case 0:
+                System.out.println(msj + " Error");
+                break;
+            case 1:
+                System.out.println(msj + " Advertencia");
+                break;
+            case 2:
+                Usuario user = controller.getUsuarioActual();
+                if (user != null) {
+                    System.out.println(msj);
+                    System.out.println("✅ Usuario autenticado correctamente (" +  user.getRol() + ")");
+
+                } else {
+                    System.out.println(msj + " Usuario no disponible.");
+                }
+                break;
+            default:
+                System.out.println("❌ Tipo de mensaje desconocido: " + msj);
+                break;
         }
-    }
 
+    }
 }

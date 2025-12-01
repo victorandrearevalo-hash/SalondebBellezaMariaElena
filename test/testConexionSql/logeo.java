@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package testConexionSql;
 
 import conexionSql.Conexion;
@@ -10,7 +6,6 @@ import conexionSql.Conexion;
  *
  * @author Administrador
  */
-
 public class logeo {
 
     public static void main(String[] args) {

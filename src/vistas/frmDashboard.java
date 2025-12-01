@@ -1,20 +1,42 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package vistas;
+
+import clases.DashboardMetricas;
+import com.sun.jdi.connect.spi.Connection;
+import conexionSql.Conexion;
+import controlador.dashboardController;
+import java.beans.PropertyVetoException;
+import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
  * @author Administrador
  */
-public class frmDashboard extends javax.swing.JFrame {
+public class frmDashboard extends JInternalFrame {
 
     /**
      * Creates new form frmDashboard
      */
     public frmDashboard() {
         initComponents();
+        crearTablaMetricas();
+        cargarMetricas();
+        mostrarGraficoLinea();
+        setClosable(false);      // Ocultar botón de cerrar
+        setIconifiable(false);  // Ocultar minimizar
+        setMaximizable(false);  // Ocultar maximizar
+        setResizable(false);    // Desactivar redimensionar
+        this.setTitle("Dashboard");
+
     }
 
     /**
@@ -26,117 +48,118 @@ public class frmDashboard extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         panelCitasHoy = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        lblCitasHoy = new javax.swing.JLabel();
         panelCitasHoy1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        lblPendientes = new javax.swing.JLabel();
         panelCitasHoy2 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        btnNuevaCita = new javax.swing.JButton();
+        lblCanceladas = new javax.swing.JLabel();
+        btnCerrar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblMetricas = new javax.swing.JTable();
+        pnlGrafico = new javax.swing.JPanel();
+        btnReporte = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 22)); // NOI18N
         jLabel1.setText("Dashboard - Salón María Elena");
 
         panelCitasHoy.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Citas de Hoy : 12");
+        lblCitasHoy.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        lblCitasHoy.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCitasHoy.setText("Citas de Hoy : 12");
 
         javax.swing.GroupLayout panelCitasHoyLayout = new javax.swing.GroupLayout(panelCitasHoy);
         panelCitasHoy.setLayout(panelCitasHoyLayout);
         panelCitasHoyLayout.setHorizontalGroup(
             panelCitasHoyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCitasHoyLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jLabel2)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addComponent(lblCitasHoy)
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         panelCitasHoyLayout.setVerticalGroup(
             panelCitasHoyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCitasHoyLayout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jLabel2)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblCitasHoy)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panelCitasHoy1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel3.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Pendientes: 5");
+        lblPendientes.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        lblPendientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPendientes.setText("Pendientes: 5");
 
         javax.swing.GroupLayout panelCitasHoy1Layout = new javax.swing.GroupLayout(panelCitasHoy1);
         panelCitasHoy1.setLayout(panelCitasHoy1Layout);
         panelCitasHoy1Layout.setHorizontalGroup(
             panelCitasHoy1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCitasHoy1Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(jLabel3)
-                .addContainerGap(54, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCitasHoy1Layout.createSequentialGroup()
+                .addContainerGap(43, Short.MAX_VALUE)
+                .addComponent(lblPendientes)
+                .addGap(39, 39, 39))
         );
         panelCitasHoy1Layout.setVerticalGroup(
             panelCitasHoy1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCitasHoy1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jLabel3)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addComponent(lblPendientes)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         panelCitasHoy2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel4.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Canceladas: 3");
+        lblCanceladas.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        lblCanceladas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCanceladas.setText("Canceladas: 3");
 
         javax.swing.GroupLayout panelCitasHoy2Layout = new javax.swing.GroupLayout(panelCitasHoy2);
         panelCitasHoy2.setLayout(panelCitasHoy2Layout);
         panelCitasHoy2Layout.setHorizontalGroup(
             panelCitasHoy2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCitasHoy2Layout.createSequentialGroup()
-                .addContainerGap(51, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(39, 39, 39))
+                .addContainerGap(41, Short.MAX_VALUE)
+                .addComponent(lblCanceladas)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         panelCitasHoy2Layout.setVerticalGroup(
             panelCitasHoy2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCitasHoy2Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(jLabel4)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblCanceladas)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"Ana Peréz", "Corte", "15/10", "10:00", "Activa", "    Editar | Eliminar"},
-                {"Luis Rojas", "Manicure", "15/10", "12:00", "Activa", "    Editar | Eliminar"}
-            },
-            new String [] {
-                "Clente", "Servicio", "Fecha", "Hora", "Estado", "Acciones"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+        btnCerrar.setText("Cerrar");
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarActionPerformed(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
 
-        btnNuevaCita.setBackground(new java.awt.Color(76, 175, 80));
-        btnNuevaCita.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        btnNuevaCita.setForeground(new java.awt.Color(255, 255, 255));
-        btnNuevaCita.setText("+ Nueva Cita");
-        btnNuevaCita.setBorderPainted(false);
-        btnNuevaCita.setFocusPainted(false);
-        btnNuevaCita.addActionListener(new java.awt.event.ActionListener() {
+        tblMetricas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblMetricas);
+
+        pnlGrafico.setBackground(new java.awt.Color(102, 255, 255));
+        pnlGrafico.setLayout(new java.awt.BorderLayout());
+
+        btnReporte.setText("Reporte");
+        btnReporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevaCitaActionPerformed(evt);
+                btnReporteActionPerformed(evt);
             }
         });
 
@@ -144,49 +167,67 @@ public class frmDashboard extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(82, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(80, 80, 80)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(210, 210, 210)
-                        .addComponent(jLabel1))
+                        .addComponent(btnReporte)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(208, 208, 208)
+                        .addComponent(btnCerrar)
+                        .addGap(30, 30, 30))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(panelCitasHoy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50)
-                        .addComponent(panelCitasHoy2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50)
-                        .addComponent(panelCitasHoy1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(700, 700, 700)
-                        .addComponent(btnNuevaCita, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 820, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(59, 59, 59))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(panelCitasHoy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(124, 124, 124)
+                                .addComponent(panelCitasHoy2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(106, 106, 106)
+                                .addComponent(panelCitasHoy1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2)
+                            .addComponent(pnlGrafico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 101, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabel1)
-                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelCitasHoy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelCitasHoy2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCerrar)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(btnReporte))))
+                .addGap(42, 42, 42)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(panelCitasHoy2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelCitasHoy, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelCitasHoy1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addComponent(btnNuevaCita, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlGrafico, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNuevaCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaCitaActionPerformed
-        // TODO add your handling code here:
-        new frmCita().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnNuevaCitaActionPerformed
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        // Cierra el formulario interno
+        try {
+            this.setClosed(true); // ✅ Cierra correctamente el JInternalFrame
+        } catch (PropertyVetoException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
+        dashboardController ctrl = new dashboardController();
+        // Solo visor
+        ctrl.generarReporte(false);
+    }//GEN-LAST:event_btnReporteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -223,16 +264,166 @@ public class frmDashboard extends javax.swing.JFrame {
         });
     }
 
+    private void mostrarGraficoLinea() {
+
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        DefaultTableModel modelo = (DefaultTableModel) tblMetricas.getModel();
+
+        // Verificamos si hay datos
+        if (modelo.getRowCount() == 0) {
+            System.out.println("No hay datos en la tabla de métricas");
+            return;
+        }
+
+        // Suponemos que solo hay una fila de métricas (como tu caso)
+        int fila = 0;
+
+        // Agregar valores al dataset (verifica nombres exactos de tus columnas)
+        Number totalCitas = (Number) modelo.getValueAt(fila, 0);
+        Number atendidas = (Number) modelo.getValueAt(fila, 1);
+        Number pendientes = (Number) modelo.getValueAt(fila, 2);
+        Number canceladas = (Number) modelo.getValueAt(fila, 3);
+
+        dataset.addValue(totalCitas.doubleValue(), "Citas", "Total");
+        dataset.addValue(atendidas.doubleValue(), "Citas", "Atendidas");
+        dataset.addValue(pendientes.doubleValue(), "Citas", "Pendientes");
+        dataset.addValue(canceladas.doubleValue(), "Citas", "Canceladas");
+
+        // Crear el gráfico lineal
+        JFreeChart chart = ChartFactory.createLineChart(
+                "Resumen de Citas", // Título
+                "Categoría", // Eje X
+                "Cantidad", // Eje Y
+                dataset
+        );
+
+        // Mostrar el gráfico dentro del panel
+        ChartPanel panel = new ChartPanel(chart);
+        panel.setPreferredSize(new java.awt.Dimension(600, 300));
+
+        // 🔒 DESACTIVAR TODA INTERACCIÓN DEL MOUSE
+        panel.setMouseZoomable(false);
+        panel.setDomainZoomable(false);
+        panel.setRangeZoomable(false);
+        panel.setMouseWheelEnabled(false);
+        panel.setDisplayToolTips(false);
+
+        pnlGrafico.removeAll();
+        pnlGrafico.setLayout(new java.awt.BorderLayout());
+        pnlGrafico.add(panel, java.awt.BorderLayout.CENTER);
+        pnlGrafico.validate();
+
+    }
+
+    private void crearTablaMetricas() {
+        DefaultTableModel tb = new DefaultTableModel();
+
+        tb.addColumn("Total Citas");
+        tb.addColumn("Citas Atendidas");
+        tb.addColumn("Citas Pendientes");
+        tb.addColumn("Citas Canceladas");
+        tb.addColumn("Clientes Activos");
+        tb.addColumn("Trabajadores Activos");
+        tb.addColumn("Servicio Más Solicitado");
+        tb.addColumn("Área Más Demandada");
+        tb.addColumn("Promedio Citas/Trabajador");
+
+        tblMetricas.setModel(tb);
+        tblMetricas.setDefaultEditor(Object.class, null); // Evita edición
+        tblMetricas.getTableHeader().setReorderingAllowed(false);
+        tblMetricas.getTableHeader().setResizingAllowed(false);
+
+        // Ajustar tamaños
+        tamañoTablaMetricas();
+        alinearColumnasMetricas();
+        ocultarColumnas();
+    }
+
+    private void tamañoTablaMetricas() {
+        int[] anchos = {80, 100, 100, 100, 100, 120, 160, 160, 160};
+        for (int i = 0; i < anchos.length && i < tblMetricas.getColumnCount(); i++) {
+            tblMetricas.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+        }
+    }
+
+    private void alinearColumnasMetricas() {
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // Centramos solo los valores numéricos
+        int[] columnasCentradas = {0, 1, 2, 3, 4, 5, 8};
+        for (int col : columnasCentradas) {
+            tblMetricas.getColumnModel().getColumn(col).setCellRenderer(centerRenderer);
+        }
+    }
+
+    private void ocultarColumnas() {
+        // Ocultar columnas específicas
+        int[] columnasOcultar = {1, 2, 3}; // índices de las columnas que quieres ocultar
+
+        for (int i : columnasOcultar) {
+            tblMetricas.getColumnModel().getColumn(i).setMinWidth(0);
+            tblMetricas.getColumnModel().getColumn(i).setMaxWidth(0);
+            tblMetricas.getColumnModel().getColumn(i).setWidth(0);
+        }
+    }
+
+    private void cargarMetricas() {
+
+        try {
+            dashboardController controller = new dashboardController();
+            DashboardMetricas datos = controller.obtenerMetricas();
+
+            // 🔹 Actualizar tus labels
+            lblCitasHoy.setText("Citas de Hoy: " + datos.getCitasHoy());
+            lblCanceladas.setText("Canceladas: " + datos.getCitasCanceladas());
+            lblPendientes.setText("Pendientes: " + datos.getCitasPendientes());
+
+            DefaultTableModel tb = (DefaultTableModel) tblMetricas.getModel();
+            tb.setRowCount(0); // limpiar tabla
+
+            if (datos == null) {
+                JOptionPane.showMessageDialog(this,
+                        "⚠️ No se encontraron métricas del sistema.",
+                        "Sin datos", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            Object[] fila = {
+                datos.getTotalCitas(),
+                datos.getCitasAtendidas(),
+                datos.getCitasPendientes(),
+                datos.getCitasCanceladas(),
+                datos.getClientesActivos(),
+                datos.getTrabajadoresActivos(),
+                datos.getServicioMasSolicitado(),
+                datos.getAreaMasDemandada(),
+                datos.getPromedioProductividad()
+            };
+
+            tb.addRow(fila);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "❌ Error al cargar métricas: " + ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnNuevaCita;
+    private javax.swing.JButton btnCerrar;
+    private javax.swing.JButton btnReporte;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblCanceladas;
+    private javax.swing.JLabel lblCitasHoy;
+    private javax.swing.JLabel lblPendientes;
     private javax.swing.JPanel panelCitasHoy;
     private javax.swing.JPanel panelCitasHoy1;
     private javax.swing.JPanel panelCitasHoy2;
+    private javax.swing.JPanel pnlGrafico;
+    private javax.swing.JTable tblMetricas;
     // End of variables declaration//GEN-END:variables
 }

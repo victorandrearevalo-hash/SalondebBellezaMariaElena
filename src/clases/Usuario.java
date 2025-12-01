@@ -1,64 +1,93 @@
 package clases;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Administrador
  */
 public class Usuario {
 
-    private int idUsuario;
-    private String nombreUsuario;
-    private String rolUsuario;
-    private String correoUsuario;
-    private String passwordUsuario;
-    private boolean estadoUsuario;
+    private int id;
+    private String nombre;
+    private String rol;
+    private String correo;
+    private String contrasena;
+    private boolean estado;
+    private int idRol;
+    private List<String> permisos = new ArrayList<>();
 
-  
-    public int getIdUsuario() {
-        return idUsuario;
+    public int getId() {
+        return id;
     }
 
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getRolUsuario() {
-        return rolUsuario;
+    public String getRol() {
+        return rol;
     }
 
-    public void setRolUsuario(String rolUsuario) {
-        this.rolUsuario = rolUsuario;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
-    public String getCorreoUsuario() {
-        return correoUsuario;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setCorreoUsuario(String correoUsuario) {
-        this.correoUsuario = correoUsuario;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
-    public String getPasswordUsuario() {
-        return passwordUsuario;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setPasswordUsuario(String passwordUsuario) {
-        this.passwordUsuario = passwordUsuario;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
-    public boolean isEstadoUsuario() {
-        return estadoUsuario;
+    public boolean isEstado() {
+        return estado;
     }
 
-    public void setEstadoUsuario(boolean estadoUsuario) {
-        this.estadoUsuario = estadoUsuario;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    public int getIdRol() {
+        return idRol;
+    }
+
+    public void setIdRol(int idRol) {
+        this.idRol = idRol;
+    }
+
+    public List<String> getPermisos() {
+        return permisos;
+    }
+
+    public void setPermisos(List<String> permisos) {
+        this.permisos = permisos;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{"
+                + "id=" + id
+                + ", nombre='" + nombre + '\''
+                + ", rol='" + rol + '\''
+                + '}';
     }
 }

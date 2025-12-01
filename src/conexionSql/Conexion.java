@@ -24,7 +24,6 @@ public class Conexion {
             if (conexion == null || conexion.isClosed()) {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 conexion = DriverManager.getConnection(URL, USER, PASSWORD);
-                System.out.println("✅ Conexión establecida con SQL Server");
             }
         } catch (ClassNotFoundException e) {
             System.err.println("❌ Error: No se encontró el driver JDBC de SQL Server.");

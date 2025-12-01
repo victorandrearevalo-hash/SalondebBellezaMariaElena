@@ -1,22 +1,15 @@
 package interfaces;
 
-import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  *
  * @author Administrador
  */
+public interface Interfaz<T> {
 
-public interface interfaz<T> {
+    //List<T> buscar(String criterio);
 
-    boolean insertar(T t);
-
-    boolean eliminar(T t);
-
-    boolean actualizar(T t);
-
-    T buscar(int id);
-
-    ArrayList<T> listar();
-    
+    List<T> listar();
 }

@@ -1,18 +1,40 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package aplicacion;
+
+import vistas.frmLogin;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 /**
  *
  * @author Administrador
  */
-
-import vistas.frmLogin;
-
 public class MainApp {
+
     public static void main(String[] args) {
-        new frmLogin().setVisible(true);
+
+        // Activar Nimbus si está disponible
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            // Si Nimbus no está, usa el LAF por defecto
+            System.err.println("Error al aplicar Nimbus: " + e.getMessage());
+        }
+
+        // Iniciar el login en el hilo de Swing
+        SwingUtilities.invokeLater(() -> {
+            try {
+                frmLogin login = new frmLogin();
+                login.setLocationRelativeTo(null);
+                login.setVisible(true);
+            } catch (Exception ex) {
+                // Captura cualquier error al abrir la vista
+                ex.printStackTrace();
+            }
+        });
     }
 }

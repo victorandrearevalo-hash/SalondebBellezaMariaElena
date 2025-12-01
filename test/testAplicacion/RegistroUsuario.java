@@ -1,8 +1,9 @@
 package testAplicacion;
 
 import clases.Usuario;
-import controlador.UsuarioController; // asegúrate del paquete correcto
+import controlador.usuarioController; // asegúrate del paquete correcto
 import java.util.Scanner;
+import util.ValidadorSeguridad;
 
 /**
  *
@@ -17,38 +18,44 @@ public class RegistroUsuario {
      */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        UsuarioController controller = new UsuarioController();
+        usuarioController controller = new usuarioController();
         Usuario u = new Usuario();
 
         System.out.println("=== Registro de Usuario ===");
 
         // Solicitar datos al usuario
         System.out.print("Nombre de usuario: ");
-        u.setNombreUsuario(sc.nextLine());
+        u.setNombre(sc.nextLine());
 
         System.out.print("Rol del usuario: ");
-        u.setRolUsuario(sc.nextLine());
+        u.setRol(sc.nextLine());
 
         System.out.print("Correo electrónico: ");
-        u.setCorreoUsuario(sc.nextLine());
+        u.setCorreo(sc.nextLine());
 
         System.out.print("Contraseña: ");
-        u.setPasswordUsuario(sc.nextLine());
+        String pass = sc.nextLine();
 
-        // Validar seguridad de la contraseña
-        if (!controller.esContrasenaSegura(u.getPasswordUsuario())) {
-            System.out.println("⚠️ La contraseña no es segura. Debe tener más de 8 caracteres, al menos una mayúscula y un número.");
+        // ✅ Validar seguridad de la contraseña antes de asignarla
+        if (!ValidadorSeguridad.contraseñaSegura(pass)) {
+            System.out.println("⚠️ La contraseña no es segura. Debe tener entre 8 y 10 caracteres, al menos una mayúscula, una minúscula, un número y un carácter especial.");
+            sc.close();
             return;
         }
+        u.setContrasena(pass);
 
-        // Intentar registrar el usuario usando el DAO y SP
+        // ✅ Estado del usuario
+        System.out.print("Estado del usuario (true = activo, false = inactivo): ");
+        boolean estado = Boolean.parseBoolean(sc.nextLine());
+        u.setEstado(estado);
+
+        // ✅ Intentar registrar el usuario usando el Controller
         if (controller.registrarUsuario(u)) {
             System.out.println("✅ Usuario registrado correctamente.");
         } else {
             System.out.println("❌ Error al registrar usuario. Revisa la conexión o si el usuario ya existe.");
         }
 
-        // Cerrar el scanner
         sc.close();
     }
 }

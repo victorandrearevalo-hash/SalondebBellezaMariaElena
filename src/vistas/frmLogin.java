@@ -1,27 +1,43 @@
 package vistas;
 
+import clases.SesionUsuario;
 import clases.Usuario;
-import controlador.UsuarioController;
+import controlador.usuarioController;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Administrador
  */
-public class frmLogin extends javax.swing.JFrame {
+public class frmLogin extends JFrame {
 
     /**
      * Creates new form FrmLogin
      */
     public frmLogin() {
         initComponents();
-        this.setLocationRelativeTo(null); 
+        this.setLocationRelativeTo(null);
         Limpiar();
+        usuarioWindows();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);    // Desactivar redimensionar
+        this.setTitle("Sesion de Acceso ");
+        pack(); // Ajusta el tamaño automáticamente según componentes
+
     }
 
     void Limpiar() {
         txtUsuario.setText("");
         txtContraseña.setText("");
+    }
+
+    private void usuarioWindows() {
+        // Obtener el usuario de Windows
+        String usuarioWindows = System.getProperty("user.name");
+        txtUsuario.setText(usuarioWindows);
+        // Poner el foco directamente en la contraseña
+        txtContraseña.requestFocus();
     }
 
     /**
@@ -54,57 +70,55 @@ public class frmLogin extends javax.swing.JFrame {
             }
         });
 
-        txtContraseña.setText("45454");
+        txtContraseña.setText("4545412445646666");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(157, 157, 157)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
-                                .addComponent(btnIngresar))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtContraseña, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGap(23, 23, 23)
-                                    .addComponent(lblPassword)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(34, 34, 34)
-                                .addComponent(lblUsuario)))))
+                .addGap(30, 30, 30)
+                .addComponent(jLabel3)
                 .addContainerGap(29, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnIngresar)
+                        .addGap(27, 27, 27))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(23, 23, 23)
+                            .addComponent(lblPassword))
+                        .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(34, 34, 34)
+                            .addComponent(lblUsuario))))
+                .addGap(150, 150, 150))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
                 .addComponent(lblUsuario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(24, 24, 24)
                 .addComponent(lblPassword)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGap(18, 18, 18)
                 .addComponent(btnIngresar)
-                .addGap(30, 30, 30))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        // TODO add your handling code here:
         String usuario = txtUsuario.getText().trim();
         String password = new String(txtContraseña.getPassword());
 
@@ -113,17 +127,41 @@ public class frmLogin extends javax.swing.JFrame {
             return;
         }
 
-        UsuarioController controller = new UsuarioController();
-        Usuario user = controller.login(usuario, password);
+        usuarioController controller = new usuarioController();
+        boolean loginExitoso = controller.validarlogin(usuario, password);
 
-        if (user != null) {
-            JOptionPane.showMessageDialog(this, "✅ Bienvenido " + user.getNombreUsuario(), "Login exitoso", JOptionPane.INFORMATION_MESSAGE);
-            new frmMDIPrincipal().setVisible(true);
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "❌ Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+        int tipo = controller.getTipoMensaje();
+        String msj = controller.getMensaje();
+        Usuario user = controller.getUsuarioActual(); // ✅ Obtener usuario actual después de validar
+
+        switch (tipo) {
+            case 0: // ERROR
+                JOptionPane.showMessageDialog(this, msj, "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+            case 1: // ADVERTENCIA
+                JOptionPane.showMessageDialog(this, msj, "Advertencia", JOptionPane.WARNING_MESSAGE);
+                break;
+            case 2: // ÉXITO
+                if (user != null) {
+                    JOptionPane.showMessageDialog(this, msj, "Login exitoso", JOptionPane.INFORMATION_MESSAGE);
+
+                    // Guardar sesión si tienes clase SesionUsuario
+                    SesionUsuario.setUsuarioActual(user);
+
+                    // Abrir ventana principal pasando el usuario
+                    frmMDIPrincipal principal = new frmMDIPrincipal(user);
+                    principal.setVisible(true);
+                    // Cerrar login
+                    this.dispose();
+                } else {
+                    // Caso raro: login dice éxito pero no hay usuario
+                    JOptionPane.showMessageDialog(this, "Usuario no disponible.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "Tipo de mensaje desconocido: " + msj, "Error", JOptionPane.ERROR_MESSAGE);
+                break;
         }
-        Limpiar();
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
@@ -140,16 +178,24 @@ public class frmLogin extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmLogin.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmLogin.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmLogin.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmLogin.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>

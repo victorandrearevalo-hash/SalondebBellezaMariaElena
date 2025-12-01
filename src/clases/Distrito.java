@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package clases;
 
 /**
@@ -10,45 +6,47 @@ package clases;
  */
 public class Distrito {
 
-    private String idDistrito;
-    private String nombreDistrito;
-    private String codigoPostal;
+    private int idDistrito;
+    private String nombre;
+    private String codPostal;
 
     public Distrito() {
     }
 
-    public Distrito(String idDistrito, String nombreDistrito, String codigoPostal) {
-        this.idDistrito = idDistrito;
-        this.nombreDistrito = nombreDistrito;
-        this.codigoPostal = codigoPostal;
-    }
+    public Distrito(int idDistrito, String nombre) {
+    this.idDistrito = idDistrito;
+    this.nombre = nombre;
+}
 
-    public String getIdDistrito() {
+
+
+    public int getIdDistrito() {
         return idDistrito;
     }
 
-    public void setIdDistrito(String idDistrito) {
+    public void setIdDistrito(int idDistrito) {
         this.idDistrito = idDistrito;
     }
 
-    public String getNombreDistrito() {
-        return nombreDistrito;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreDistrito(String nombreDistrito) {
-        this.nombreDistrito = nombreDistrito;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getCodigoPostal() {
-        return codigoPostal;
+        return codPostal;
     }
 
     public void setCodigoPostal(String codigoPostal) {
-        this.codigoPostal = codigoPostal;
+        this.codPostal = codigoPostal;
     }
 
     @Override
     public String toString() {
-        return nombreDistrito; // útil para mostrarlo en JComboBox
+        return nombre; // útil para mostrarlo en JComboBox
     }
+
 }
